@@ -1,0 +1,50 @@
+# author: jinal (kapatelj@uwindsor.ca)
+
+# YAML file to create network and 3 nodes (attacker, server and legitimate user)
+
+version: "3"
+
+services:
+        attacker:
+                image: handsonsecurity/seed-ubuntu:large
+                container_name: seed-attacker
+                tty: true
+                cap_add:
+                        - ALL
+                privileged: true
+                volumes:
+                        - ./volumes:/volumes
+                network_mode: host
+
+        server:
+                image: handsonsecurity/seed-ubuntu:large
+                container_name: server-10.9.0.5
+                tty: true
+                cap_add:
+                        - ALL
+                networks:
+                        net-10.9.0.0:
+                                ipv4_address: 10.9.0.5
+                volumes:
+                        - ./volumes:/volumes
+                command: bash -c " /etc/init.d/openbsd-inetd start && tail -f /dev/null"
+
+        legitimate_user:
+                image: handsonsecurity/seed-ubuntu:large
+                container_name: user-10.9.0.6
+                tty: true
+                cap_add:
+                        - ALL
+                networks:
+                        net-10.9.0.0:
+                                ipv4_address: 10.9.0.6
+                volumes:
+                        - ./volumes:/volumes
+                command: bash -c " /etc/init.d/openbsd-inetd start && pip install requests && tail -f /dev/null"
+
+networks:
+        net-10.9.0.0:
+                name: net-10.9.0.0
+                ipam:
+                        config:
+                                - subnet: 10.9.0.0/24
