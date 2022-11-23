@@ -142,14 +142,14 @@ def form_analysis(forms,url):
 
 @app.route('/validate_xss_attack_forms', methods = ['POST', 'GET'])
 def scan_attack_form():
-    url="http://localhost:5010/reflected_xss_attack_form"
+    url="http://localhost:5010/dom_attack_form"
     forms = get_all_forms(url)
     _validation_dict=form_analysis(forms,url)
     return _validation_dict
 
 @app.route('/validate_xss_defense_forms', methods = ['POST', 'GET'])
 def scan_defense_form():
-    url="http://localhost:5010/reflected_xss_defense_form"
+    url="http://localhost:5010/dom_defense_form"
     forms = get_all_forms(url)
     _validation_dict=form_analysis(forms,url)
     return _validation_dict
