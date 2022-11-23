@@ -1,0 +1,1 @@
+Secret_Cookie=abc; cookie=secret

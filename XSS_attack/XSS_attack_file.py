@@ -41,7 +41,9 @@ def final_form(form_details, url, value):
 
 @app.route('/dom_attack_form')
 def reflected_xss_attack_form():
-    return render_template('dom_attack_form.html')
+    resp = make_response(render_template('dom_attack_form.html'))
+    resp.set_cookie("cookie", "secret")
+    return resp
 
 @app.route('/dom_defense_form')
 def reflected_xss_defense_form():
