@@ -1,8 +1,8 @@
 FROM python:3.7.4-alpine3.10
-RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
-    apk add --no-cache --update python3 && \
-    pip3 install --upgrade pip setuptools
-RUN pip3 install pendulum service_identity
+RUN apk add python3 --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
+    apk add python3 --no-cache --update python3 && \
+    pip install --upgrade pip setuptools
+RUN pip install pendulum service_identity
 RUN mkdir /app
 WORKDIR /app
 RUN pip install PyMySQL

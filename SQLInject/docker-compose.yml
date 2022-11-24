@@ -7,7 +7,6 @@ services:
   app:
     image: python:3.8-slim-buster
     container_name: flask_app
-    restart: unless-stopped
     labels:
       project: "flask"
       day: "9 Sep 2019"
