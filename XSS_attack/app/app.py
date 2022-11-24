@@ -38,6 +38,9 @@ def final_form(form_details, url, value):
         if _name and _value:
             _data[_name] = _value
     return requests.post(final_url, data=_data)
+@app.route('/')
+def basefn():
+    return "Hello"
 
 @app.route('/dom_attack_form')
 def reflected_xss_attack_form():
@@ -74,7 +77,7 @@ def data_protection():
 def stored_xss_attack():
 
     data_base_file_name = "names.txt"
-
+    
     if request.method == 'POST':
         name = request.form["name"]
 
@@ -82,6 +85,7 @@ def stored_xss_attack():
             f.write(name+"\n")
 
     names = ""
+
     with open(data_base_file_name, "r+") as f:
         for name in f.readlines():
             names+=name+"\n"
@@ -111,8 +115,8 @@ def stored_xss_defense():
     return r
 
 @app.route("/reflected_xss_attack")
-#normal http://localhost:5010/reflected_xss_attack?value=abs
-#attack http://localhost:5010/reflected_xss_attack?value=<script>alert("hi")</script>
+#normal http://localhost/reflected_xss_attack?value=abs
+#attack http://localhost/reflected_xss_attack?value=<script>alert("hi")</script>
 def dom_xss_attack():
     value=request.args.get("value")
     print(value)
@@ -120,7 +124,7 @@ def dom_xss_attack():
     return r
 
 @app.route("/reflected_xss_defense")
-#http://localhost:5010/reflected_xss_defense?value=<script>alert("hi")</script>
+#http://localhost/reflected_xss_defense?value=<script>alert("hi")</script>
 def dom_xss_defense():
     to_clean = re.compile('<.*?>')
     value=request.args.get("value")
@@ -144,18 +148,18 @@ def form_analysis(forms,url):
 
 @app.route('/validate_xss_attack_forms', methods = ['POST', 'GET'])
 def scan_attack_form():
-    url="http://localhost:5010/dom_attack_form"
+    url="http://localhost/dom_attack_form"
     forms = get_all_forms(url)
     _validation_dict=form_analysis(forms,url)
     return _validation_dict
 
 @app.route('/validate_xss_defense_forms', methods = ['POST', 'GET'])
 def scan_defense_form():
-    url="http://localhost:5010/dom_defense_form"
+    url="http://localhost/dom_defense_form"
     forms = get_all_forms(url)
     _validation_dict=form_analysis(forms,url)
     return _validation_dict
 
 
 
-app.run(host='localhost', port=5010)
+app.run(host='0.0.0.0', port=80)
