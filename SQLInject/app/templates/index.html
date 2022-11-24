@@ -9,8 +9,16 @@
         <input type="submit"/>
     </form>
 
-    <h3>Secure Form</h3>
+    <h3>Secure Form using ORM</h3>
     <form action="/secure-profile-details" method="POST">
+        Username:<input type="text" name="username"/>
+        Password:<input type="password" name="password"/>
+        <br/>
+        <input type="submit"/>
+    </form>
+
+    <h3>Secure Form using Parametrized Query</h3>
+    <form action="/secure-nonorm-profule-details" method="POST">
         Username:<input type="text" name="username"/>
         Password:<input type="password" name="password"/>
         <br/>
